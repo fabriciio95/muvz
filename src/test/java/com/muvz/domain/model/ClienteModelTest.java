@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
-import com.muvz.domain.validation.Validation.ClienteAtualizacaoValidation;
-
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ClienteModelTest {
 
@@ -60,28 +58,16 @@ public class ClienteModelTest {
 
 	}
 	
-	@Test
-	void testValidaAtributosComGrupoValidationClienteAtualizacao() {
-		cliente.setId(1L);
-		Set<ConstraintViolation<Cliente>> violacao = validator
-				.validate(cliente, ClienteAtualizacaoValidation.class);
-		assertTrue(violacao.isEmpty());
-		
-		cliente.setId(null);
-		violacao = validator.validate(cliente, ClienteAtualizacaoValidation.class);
-		assertFalse(violacao.isEmpty());
-		
-	}
 	
 	@Test
-	void testValidaAtributosComGrupoValidationDefault() {
+	void testValidaAtributosNull() {
 		cliente.setId(null);
 		Set<ConstraintViolation<Cliente>> violacao = validator
-				.validate(cliente, Default.class);
+				.validate(cliente);
 		assertTrue(violacao.isEmpty());
 		
 		cliente.setId(1L);
-		violacao = validator.validate(cliente, Default.class);
+		violacao = validator.validate(cliente);
 		assertFalse(violacao.isEmpty());
 		
 	}

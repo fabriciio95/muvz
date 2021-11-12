@@ -9,9 +9,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
-import javax.validation.groups.Default;
-
-import com.muvz.domain.validation.Validation.ClienteAtualizacaoValidation;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,20 +20,20 @@ import lombok.EqualsAndHashCode;
 public class Cliente {
 
 	@EqualsAndHashCode.Include
-	@Null(groups = { Default.class, ClienteAtualizacaoValidation.class }, message = "Id deve ser nulo")
+	@Null(message = "Id deve ser nulo")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(groups = { Default.class, ClienteAtualizacaoValidation.class }, message = "Nome não pode ser vazio")
+	@NotBlank(message = "Nome não pode ser vazio")
 	@Column(nullable = false)
 	private String nome;
 	
-	@NotBlank(groups = { Default.class, ClienteAtualizacaoValidation.class }, message = "Cpf não pode ser vazio")
+	@NotBlank(message = "Cpf não pode ser vazio")
 	@Column(nullable = false, unique = true)
 	private String cpf;
 	
-	@NotBlank(groups = { Default.class, ClienteAtualizacaoValidation.class }, message = "Telefone não pode ser vazio")
+	@NotBlank(message = "Telefone não pode ser vazio")
 	@Column(nullable = false, unique = true)
 	private String telefone;
 	

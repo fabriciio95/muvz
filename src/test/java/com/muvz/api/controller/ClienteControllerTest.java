@@ -73,10 +73,10 @@ public class ClienteControllerTest {
 		ResponseEntity<Cliente> resposta = testRestTemplate.exchange("/clientes", HttpMethod.POST, 
 				request, Cliente.class);
 		assertEquals(resposta.getStatusCode(), HttpStatus.CREATED);
-		cliente.setId(resposta.getBody().getId());
+
 		cliente.setEmail("testado2@gmail.com");
 		
-		resposta = testRestTemplate.exchange("/clientes/" + cliente.getId() , HttpMethod.PUT, 
+		resposta = testRestTemplate.exchange("/clientes/" + resposta.getBody().getId() , HttpMethod.PUT, 
 				request, Cliente.class);
 		assertEquals(resposta.getStatusCode(), HttpStatus.OK);
 		
