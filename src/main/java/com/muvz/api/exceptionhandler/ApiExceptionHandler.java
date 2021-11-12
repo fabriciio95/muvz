@@ -41,7 +41,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	
-	
 	private Problema criarProblema(Exception ex, int status, String msg) {
 		Problema problema = new Problema();
 		problema.setStatus(status);

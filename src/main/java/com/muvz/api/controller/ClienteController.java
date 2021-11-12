@@ -39,7 +39,7 @@ public class ClienteController {
 	private ClienteMapper clienteMapper;
 	
 	
-	@GetMapping
+	@GetMapping(produces = "application/json")
 	public ResponseEntity<List<ClienteDto>> buscarClientes() {
 		
 		List<ClienteDto> clientes =  clienteMapper.toListDto(clienteRepository.findAll());
@@ -48,7 +48,7 @@ public class ClienteController {
 		
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<ClienteDto> buscarCliente(@PathVariable Long id) {
 		
 		Optional<Cliente> clienteOptional = clienteRepository.findById(id);
@@ -63,13 +63,13 @@ public class ClienteController {
 		
 	}
 	
-	@PostMapping
+	@PostMapping(produces = "application/json")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ClienteDto cadastrarCliente(@RequestBody @Valid Cliente cliente) {
 		return clienteMapper.toDto(clienteService.salvar(cliente));
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<ClienteDto> atualizarCliente(@PathVariable Long id,
 			@RequestBody @Validated(ClienteAtualizacaoValidation.class) Cliente cliente) {
 		Optional<Cliente> clienteOptional = clienteRepository.findById(id);
@@ -78,12 +78,16 @@ public class ClienteController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		ClienteDto clienteDto = clienteMapper.toDto(clienteService.salvar(cliente));
+		cliente.setId(id);
+		
+		Cliente clienteAtualizado = clienteService.salvar(cliente);
+		
+		ClienteDto clienteDto = clienteMapper.toDto(clienteAtualizado);
 		
 		return ResponseEntity.ok(clienteDto);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<Void> excluirCliente(@PathVariable Long id) {
 		
 		if(!clienteRepository.existsById(id)) {

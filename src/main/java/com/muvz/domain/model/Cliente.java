@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.groups.Default;
 
@@ -24,8 +23,7 @@ import lombok.EqualsAndHashCode;
 public class Cliente {
 
 	@EqualsAndHashCode.Include
-	@NotNull(groups = ClienteAtualizacaoValidation.class, message = "Id não pode ser nulo")
-	@Null(message = "Id deve ser nulo")
+	@Null(groups = { Default.class, ClienteAtualizacaoValidation.class }, message = "Id deve ser nulo")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
